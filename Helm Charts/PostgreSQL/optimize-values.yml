@@ -1,22 +1,15 @@
 
-max_connections = 400  # Maximum concurrent connections
-shared_buffers = 8GB  # Memory allocated for caching data
-work_mem = 64MB       # Memory for sorting and hashing operations
-effective_cache_size = 12GB  # Estimated available memory for disk caching
+    max_connections = 400  # Maximum concurrent connections
+    shared_buffers = 8GB  # Memory allocated for caching data
+    work_mem = 64MB       # Memory for sorting and hashing operations
+    effective_cache_size = 12GB  # Estimated available memory for disk caching
 
-checkpoint_segments = 64  # Adjust based on write throughput
-wal_level = replica       # Adjust based on replication requirements
+    wal_level = replica       # Adjust based on replication requirements
 
-autovacuum = on
-autovacuum_max_workers = 12
-autovacuum_naptime = 10min
-autovacuum_vacuum_scale_factor = 0.05
-autovacuum_analyze_scale_factor = 0.02
-
-log_statement = 'none'  # Adjust to log desired statements for debugging or monitoring purposes
-log_min_duration_statement = 500  # Log queries exceeding 500 milliseconds (adjust as needed)
-
-log_destination = 'stderr'  # Log to standard error output
-logging_collector = on       # Enable log collection
-
-random_page_cost = 1.2  # Adjust based on the storage SSD
+    autovacuum = on
+    autovacuum_max_workers = 12
+    autovacuum_naptime = 10min
+    autovacuum_vacuum_scale_factor = 0.05
+    autovacuum_analyze_scale_factor = 0.02
+    
+    random_page_cost = 1.2  # Adjust based on the storage SSD
