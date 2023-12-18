@@ -1,6 +1,6 @@
 
 global:
-  storageClass: "local"
+  storageClass: "local-storage-rab"
 
 image:
   registry: docker.io
@@ -22,6 +22,8 @@ clustering:
 
 replicaCount: 3
 
+ulimitNofiles: ""
+  
 affinity: {}
   #WIP
   #requiredDuringSchedulingIgnoredDuringExecution:
