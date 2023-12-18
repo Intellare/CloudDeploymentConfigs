@@ -1,0 +1,84 @@
+
+## @section PostgreSQL with Repmgr parameters
+
+## PostgreSQL parameters
+##
+postgresql:
+  image:
+    registry: docker.io
+    repository: bitnami/postgresql-repmgr
+    tag: 16.1.0-debian-11-r11
+
+  replicaCount: 3
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  containerPorts:
+    postgresql: 5432
+
+  nodeSelector:
+    kube-role: worker
+
+  configuration:
+
+#  configuration: |-
+#    max_connections = 200
+#    shared_buffers = 2GB #should be 12GB
+#    work_mem = 16MB
+#    maintenance_work_mem = 1GB #should be 2GB
+
+  affinity:
+    podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: "role"
+                  operator: In
+                  values:
+                  - data
+            topologyKey: "kubernetes.io/hostname"
+
+  pdb:
+    create: true
+    minAvailable: 2
+    maxUnavailable: ""
+
+pgpool:
+  image:
+    registry: docker.io
+    repository: bitnami/pgpool
+    tag: 4.4.5-debian-11-r0
+    digest: ""
+
+    pullPolicy: IfNotPresent
+  replicaCount: 1
+  nodeSelector:
+    kube-role: worker
+
+
+rbac:
+
+  create: true
+
+
+serviceAccount:
+
+  create: true
+
+
+persistence:
+
+  enabled: true
+
+  storageClass: "local-storage-post"
+
+  mountPath: /bitnami/postgresql
+
+  accessModes:
+    - ReadWriteOnce
+
+  size: 8Gi
+
+
