@@ -1,0 +1,97 @@
+image:
+  registry: docker.io
+  repository: bitnami/mongodb
+  tag: 7.0.4-debian-11-r2
+  digest: ""
+  pullPolicy: IfNotPresent
+
+architecture: replicaset
+
+auth:
+  enabled: true
+  rootUser: root
+
+replicaSetName: rs0
+
+## @param configuration MongoDB(&reg;) configuration file to be used for Primary and Secondary nodes
+## For documentation of all options, see: http://docs.mongodb.org/manual/reference/configuration-options/
+## Example:
+#configuration: |-
+#  # where and how to store data.
+#  storage:
+#    wiredTiger:
+#      engineConfig:
+#        cacheSizeGB: 8
+#        journalCompressor: snappy
+#    dbPath: /bitnami/mongodb/data/db
+#    prealloc: true
+#    journal:
+#      enabled: true
+#    directoryPerDB: false
+#  # where to write logging data
+#  systemLog:
+#    destination: file
+#    quiet: false
+#    logAppend: true
+#    logRotate: reopen
+#    path: /opt/bitnami/mongodb/logs/mongodb.log
+#    verbosity: 0
+#  # network interfaces
+#  net:
+#    port: 27017
+#    unixDomainSocket:
+#      enabled: true
+#      pathPrefix: /opt/bitnami/mongodb/tmp
+#    ipv6: false
+#    bindIpAll: true
+#  # replica set options
+#  replication:
+#    oplogSizeMB: 8192
+#    #replSetName: replicaset
+#    #enableMajorityReadConcern: true
+#  # process management options
+#  processManagement:
+#     fork: false
+#     pidFilePath: /opt/bitnami/mongodb/tmp/mongodb.pid
+#  # set parameter options
+#  setParameter:
+#     enableLocalhostAuthBypass: true
+#  # security options
+#  security:
+#    authorization: disabled
+#    #keyFile: /opt/bitnami/mongodb/conf/keyfile
+configuration: ""
+
+replicaCount: 3
+
+affinity: {}
+
+persistence:
+  enabled: true
+  storageClass: "local-storage"
+  accessModes:
+    - ReadWriteOnce
+  size: 8Gi
+  mountPath: /bitnami/mongodb
+
+serviceAccount:
+
+  create: true
+
+rbac:
+  create: true
+
+arbiter:
+  enabled: true
+  configuration: ""
+
+replication:
+  oplogSizeMB: 8192
+storage:
+  prealloc: true
+  wiredTiger:
+    engineConfig:
+      cacheSizeGB: 8
+      journalCompressor: snappy
+
+
